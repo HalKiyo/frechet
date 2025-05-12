@@ -4,10 +4,10 @@ import matplotlib.pyplot as plt
 # step 1 loading dataset
 n_years = 120
 n_ensemble = 3000
-output_file = "../dat/osse_gum_e3000_y120.bin"
+output_file = "./osse_gum_e3000_y120.bin"
 bin_data = np.fromfile(output_file, dtype=np.float32, count=n_years*n_ensemble)
 sim_matrix = bin_data.reshape((n_years, n_ensemble), order='F') # Fortran sorting
-flattened_data = sim_matrix.flatten(0)
+flattened_data = sim_matrix.flatten(order='F')
 
 # sorting data
 data_sorted = np.sort(flattened_data)[::-1] # large >>> small
@@ -36,7 +36,7 @@ plt.title("Order Statistics of simulated Annual Maximum Flows")
 
 for T, rank, q_val in zip(return_periods, ranks_int, q_values):
     plt.axhline(y=q_val, color='red', linestyle='--', alpha=0.7)
-    plt.text(n/10, q_val*1.01, f"Q{T} = {q-val:.2f} m3/s", color = 'red', fontsize=9, va='bottom')
+    plt.text(n/10, q_val*1.01, f"Q{T} = {q_val:.2f} m3/s", color = 'red', fontsize=9, va='bottom')
 
 plt.grid(True, which="both", linestyle='--', alpha=0.5)
 plt.legend()

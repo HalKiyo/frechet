@@ -11,7 +11,7 @@ data = data.reshape(-1, 2)
 amax = pd.DataFrame(data, columns=["year", "outflow"])
 
 # Fitting Frechet distribution(genextreme)
-c_hat, loc_hat, scalea = genextreme.fit(amax["outflow"])
+c_hat, loc_hat, scale_hat = genextreme.fit(amax["outflow"])
 print(f"Fitted parameters: c = {c_hat:.4f} (if frechet then c < 0), loc = {loc_hat:.2f}, scale = {scale_hat:.2f}")
 
 # 3 frechet PDF calculation
@@ -26,7 +26,7 @@ fig, (ax1, ax2) = plt.subplots(1, 2, gridspec_kw={'width_ratios': [3, 1]}, figsi
 
 # left: year vs outflow
 ax1.scatter(amax["year"], amax["outflow"], color='blue', alpha=0.7, label="Observed Outflow")
-ax1.axhline(0, color='black', linestypel='--')
+ax1.axhline(0, color='black', linestyle='--')
 ax1.set_xlabel("Year")
 ax1.set_ylabel("Outflow (m3/s)")
 ax1.set_title("Annual Max Outflow (frechet fit)")
@@ -41,7 +41,7 @@ ax2.set_title("Frechet PDF")
 ax2.set_xlim(0, np.nanmax(pdf_vals)*1.1)
 ax2.set_ylim(y_min, y_max)
 
-plt.tigh_layout()
+plt.tight_layout()
 plt.show()
 
 # step 5 Q100 calculation
