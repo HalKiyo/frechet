@@ -6,8 +6,9 @@ n_years = 120
 n_ensemble = 3000
 output_file = "./osse_gum_e3000_y120.bin"
 bin_data = np.fromfile(output_file, dtype=np.float32, count=n_years*n_ensemble)
-sim_matrix = bin_data.reshape((n_years, n_ensemble), order='F') # Fortran sorting
-flattened_data = sim_matrix.flatten(order='F')
+# The file is a (n_years, n_ensemble) matrix in Fortran order. Reshaping and
+# flattening with order='F' returns the same 1D array, so all samples are used as is.
+flattened_data = bin_data
 
 # sorting data
 data_sorted = np.sort(flattened_data)[::-1] # large >>> small
